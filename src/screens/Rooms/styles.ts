@@ -1,0 +1,30 @@
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../constants/colors';
+
+export default StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.offWhite },
+  header: { backgroundColor: COLORS.navy, padding: 20, paddingTop: 56 },
+  title: { fontSize: 24, fontWeight: 'bold', color: COLORS.white },
+  subtitle: { fontSize: 13, color: COLORS.gray400, marginTop: 4 },
+  list: { padding: 16 },
+  card: { backgroundColor: COLORS.white, borderRadius: 14, marginBottom: 16, overflow: 'hidden', elevation: 3 },
+  image: { width: '100%', height: 180 },
+  unavailableOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'center', alignItems: 'center' },
+  unavailableText: { color: COLORS.white, fontWeight: 'bold', fontSize: 16, letterSpacing: 1 },
+  body: { padding: 14 },
+  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  name: { fontSize: 16, fontWeight: 'bold', color: COLORS.navy, flex: 1 },
+  price: { fontSize: 16, color: COLORS.gold, fontWeight: 'bold' },
+  perNight: { fontSize: 11, color: COLORS.gray400 },
+  type: { fontSize: 13, color: COLORS.gray500, marginTop: 3 },
+  amenities: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 10 },
+  amenity: { backgroundColor: COLORS.gray100, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
+  amenityText: { fontSize: 11, color: COLORS.gray600 },
+  footer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 },
+  rating: { fontSize: 13, color: COLORS.gray500 },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
+  available: { backgroundColor: COLORS.greenLight },
+  unavailable: { backgroundColor: COLORS.redLight },
+  availableText: { fontSize: 12, color: COLORS.green, fontWeight: 'bold' },
+  unavailableTextBadge: { fontSize: 12, color: COLORS.red, fontWeight: 'bold' },
+});

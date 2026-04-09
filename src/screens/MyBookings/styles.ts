@@ -1,0 +1,31 @@
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../constants/colors';
+
+export default StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.offWhite },
+  header: { backgroundColor: COLORS.navy, padding: 20, paddingTop: 56 },
+  title: { fontSize: 24, fontWeight: 'bold', color: COLORS.white },
+  subtitle: { fontSize: 13, color: COLORS.gray400, marginTop: 4 },
+  list: { padding: 16 },
+  card: { backgroundColor: COLORS.white, borderRadius: 14, marginBottom: 14, overflow: 'hidden', elevation: 3 },
+  cardHeader: { backgroundColor: COLORS.navy, padding: 14, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  roomName: { fontSize: 15, fontWeight: 'bold', color: COLORS.white, flex: 1 },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
+  confirmed: { backgroundColor: COLORS.green },
+  pending: { backgroundColor: COLORS.yellow },
+  cancelled: { backgroundColor: COLORS.red },
+  badgeText: { fontSize: 11, color: COLORS.white, fontWeight: 'bold' },
+  cardBody: { padding: 14 },
+  dateRow: { flexDirection: 'row', gap: 12, marginBottom: 12 },
+  dateBox: { flex: 1 },
+  dateLabel: { fontSize: 11, color: COLORS.gray400, marginBottom: 2 },
+  dateValue: { fontSize: 14, fontWeight: 'bold', color: COLORS.navy },
+  divider: { height: 1, backgroundColor: COLORS.gray100, marginBottom: 12 },
+  priceRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  nights: { fontSize: 13, color: COLORS.gray500 },
+  price: { fontSize: 18, fontWeight: 'bold', color: COLORS.gold },
+  empty: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 40, marginTop: 60 },
+  emptyIcon: { fontSize: 48, marginBottom: 16 },
+  emptyTitle: { fontSize: 18, fontWeight: 'bold', color: COLORS.navy, marginBottom: 8 },
+  emptyText: { fontSize: 14, color: COLORS.gray500, textAlign: 'center' },
+});
