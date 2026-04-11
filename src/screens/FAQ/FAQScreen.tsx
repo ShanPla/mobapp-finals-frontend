@@ -1,35 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { COLORS } from '../../constants/colors';
 import styles from './styles';
 
 const FAQS = [
-  { q: 'How do I make a booking?', a: 'Browse our rooms, select one you like, and tap "Book Now". Follow the prompts to confirm your reservation.' },
-  { q: 'Can I cancel my booking?', a: 'Yes, bookings can be cancelled up to 24 hours before check-in for a full refund.' },
-  { q: 'What payment methods are accepted?', a: 'We accept credit/debit cards, GCash, Maya, and bank transfers.' },
-  { q: 'Is breakfast included?', a: 'Breakfast inclusion depends on the room package. Check the room details for more information.' },
-  { q: 'How do I contact support?', a: 'You can reach us at support@luxestay.com or call our hotline at 1800-LUXE.' },
+  { q: 'What are the check-in and check-out times?', a: 'Check-in starts at 2:00 PM and check-out is by 12:00 PM. Early check-in or late check-out may be available upon request.' },
+  { q: 'Do you offer free Wi-Fi?', a: 'Yes! Complimentary high-speed Wi-Fi is available throughout the hotel, including rooms and common areas.' },
+  { q: 'Is parking available at the hotel?', a: 'Yes, we offer free on-site parking for all guests. Valet service is also available for a small fee.' },
+  { q: 'Can I bring my pet?', a: 'Pets are welcome at LuxeStay in designated pet-friendly rooms. Please inform us in advance to ensure availability.' },
+  { q: 'What is your cancellation policy?', a: 'Free cancellation is available up to 24 hours before check-in. Cancellations within this period incur a 15% fee of the total booking amount.' },
+  { q: 'Do you provide airport shuttle service?', a: 'Yes, we offer airport pick-up and drop-off service. Advance booking is required. Charges may apply.' },
+  { q: 'Are meals included with the stay?', a: 'Breakfast is complimentary for room bookings that include it. Additional meals and in-room dining are available at extra cost.' },
+  { q: 'Can I host events or meetings at the hotel?', a: 'Yes! We have fully equipped event spaces for meetings, conferences, and special occasions. Contact our events team for booking and pricing.' },
 ];
 
 export default function FAQScreen() {
   const navigation = useNavigation();
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="white" />
+          <Ionicons name="arrow-back" size={24} color={COLORS.white} />
         </TouchableOpacity>
-        <Text style={styles.title}>FAQ</Text>
+        <View>
+          <Text style={styles.headerTitle}>FAQ</Text>
+          <Text style={styles.headerSubtitle}>Frequently asked questions</Text>
+        </View>
       </View>
+
       <View style={styles.body}>
-        {FAQS.map((faq, i) => (
-          <View key={i} style={styles.item}>
-            <Text style={styles.question}>{faq.q}</Text>
-            <Text style={styles.answer}>{faq.a}</Text>
-          </View>
-        ))}
+        <Text style={styles.intro}>
+          Can't find what you're looking for? Contact us at{' '}
+          <Text style={styles.introLink}>support@luxestay.com</Text>
+        </Text>
+
+        {FAQS.map((faq, idx) => {
+          const isOpen = openIdx === idx;
+          return (
+            <View key={idx} style={[styles.item, isOpen && styles.itemOpen]}>
+              <TouchableOpacity
+                style={styles.questionRow}
+                onPress={() => setOpenIdx(isOpen ? null : idx)}
+                activeOpacity={0.8}
+              >
+                <View style={styles.questionLeft}>
+                  <View style={styles.qNumber}>
+                    <Text style={styles.qNumberText}>{idx + 1}</Text>
+                  </View>
+                  <Text style={styles.questionText}>{faq.q}</Text>
+                </View>
+                <Ionicons
+                  name={isOpen ? 'chevron-up' : 'chevron-down'}
+                  size={18}
+                  color={isOpen ? COLORS.gold : COLORS.gray400}
+                />
+              </TouchableOpacity>
+              {isOpen && (
+                <View style={styles.answerWrap}>
+                  <Text style={styles.answerText}>{faq.a}</Text>
+                </View>
+              )}
+            </View>
+          );
+        })}
       </View>
+
+      <View style={{ height: 32 }} />
     </ScrollView>
   );
 }
