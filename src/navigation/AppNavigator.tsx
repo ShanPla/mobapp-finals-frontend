@@ -13,6 +13,7 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import RoomsScreen from '../screens/Rooms/RoomsScreen';
 import RoomDetailScreen from '../screens/RoomDetail/RoomDetailScreen';
 import MyBookingsScreen from '../screens/MyBookings/MyBookingsScreen';
+import BookingDetailScreen from '../screens/BookingDetail/BookingDetailScreen';
 import MoreScreen from '../screens/More/MoreScreen';
 import AboutUsScreen from '../screens/AboutUs/AboutUsScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
@@ -27,10 +28,7 @@ function TabNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           const icons: Record<string, string> = {
-            Home: 'home',
-            Rooms: 'bed',
-            MyBookings: 'calendar',
-            More: 'menu',
+            Home: 'home', Rooms: 'bed', MyBookings: 'calendar', More: 'menu',
           };
           return <Ionicons name={icons[route.name] as any} size={size} color={color} />;
         },
@@ -63,6 +61,7 @@ export default function AppNavigator() {
           <>
             <Stack.Screen name="MainTabs" component={TabNavigator} />
             <Stack.Screen name="RoomDetail" component={RoomDetailScreen} />
+            <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
             <Stack.Screen name="AboutUs" component={AboutUsScreen} />
             <Stack.Screen name="FAQ" component={FAQScreen} />
             <Stack.Screen name="Policies" component={PoliciesScreen} />
