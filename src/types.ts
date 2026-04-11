@@ -33,6 +33,7 @@ export interface Booking {
   checkOutDate: string;
   totalGuests: number;
   totalPrice: number;
+  cancellationFee?: number;
   status: 'Pending' | 'Confirmed' | 'Cancelled';
   bookedAt: string;
 }
@@ -42,6 +43,7 @@ export type RootStackParamList = {
   Register: undefined;
   MainTabs: undefined;
   RoomDetail: { roomId: string };
+  BookingDetail: { bookingId: string };
   AboutUs: undefined;
   FAQ: undefined;
   Policies: undefined;
