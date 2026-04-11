@@ -1,0 +1,33 @@
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../constants/colors';
+
+export default StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.offWhite },
+  header: { backgroundColor: COLORS.navy, padding: 20, paddingTop: 56, flexDirection: 'row', alignItems: 'center', gap: 14 },
+  backBtn: { padding: 4 },
+  headerTitle: { fontSize: 20, fontWeight: 'bold', color: COLORS.white },
+  image: { width: '100%', height: 200 },
+  body: { padding: 20 },
+  statusRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  roomTitle: { fontSize: 20, fontWeight: 'bold', color: COLORS.navy, flex: 1, marginRight: 12 },
+  badge: { paddingHorizontal: 12, paddingVertical: 5, borderRadius: 8 },
+  confirmed: { backgroundColor: COLORS.greenLight },
+  pending: { backgroundColor: COLORS.yellowLight },
+  cancelled: { backgroundColor: COLORS.redLight },
+  confirmedText: { color: COLORS.green, fontWeight: 'bold', fontSize: 13 },
+  pendingText: { color: COLORS.yellow, fontWeight: 'bold', fontSize: 13 },
+  cancelledText: { color: COLORS.red, fontWeight: 'bold', fontSize: 13 },
+  card: { backgroundColor: COLORS.white, borderRadius: 14, padding: 16, marginBottom: 14, elevation: 2 },
+  cardTitle: { fontSize: 13, fontWeight: 'bold', color: COLORS.gray400, letterSpacing: 0.5, marginBottom: 12 },
+  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  rowLabel: { fontSize: 14, color: COLORS.gray500 },
+  rowValue: { fontSize: 14, fontWeight: '600', color: COLORS.navy },
+  divider: { height: 1, backgroundColor: COLORS.gray100, marginVertical: 10 },
+  totalLabel: { fontSize: 15, fontWeight: 'bold', color: COLORS.navy },
+  totalValue: { fontSize: 18, fontWeight: 'bold', color: COLORS.gold },
+  feeNote: { fontSize: 12, color: COLORS.red, marginTop: 4, textAlign: 'right' },
+  cancelBtn: { margin: 20, marginTop: 4, backgroundColor: COLORS.white, borderWidth: 1.5, borderColor: COLORS.red, borderRadius: 12, padding: 15, alignItems: 'center' },
+  cancelBtnText: { color: COLORS.red, fontWeight: 'bold', fontSize: 15 },
+  cancelledNote: { margin: 20, marginTop: 4, backgroundColor: COLORS.redLight, borderRadius: 12, padding: 14, alignItems: 'center' },
+  cancelledNoteText: { color: COLORS.red, fontSize: 14, fontWeight: '500' },
+});
