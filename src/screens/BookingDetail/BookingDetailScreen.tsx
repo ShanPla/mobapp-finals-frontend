@@ -12,7 +12,7 @@ import { useAuth } from '../../context/AuthContext';
 import { COLORS } from '../../constants/colors';
 import { VALIDATION } from '../../constants';
 import { validateReviewRating, validateReviewText } from '../../utils/validation';
-import { formatPrice } from '../../utils/formatUtils';
+import { formatPrice, formatDateLong, formatDateShort } from '../../utils/formatUtils';
 import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal';
 import styles from './styles';
 
@@ -24,12 +24,6 @@ type Props = {
 const CANCELLATION_FEE_PERCENT = 0.15;
 const pickerOverlay = { flex: 1, justifyContent: 'flex-end' as const, backgroundColor: 'rgba(0,0,0,0.4)' };
 const pickerSheet = { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 32, alignItems: 'center' as const };
-
-const fmt = (d: string) =>
-  new Date(d).toLocaleDateString('en-PH', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' });
-
-const fmtShort = (d: Date) =>
-  d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
 
 export default function BookingDetailScreen({ navigation, route }: Props) {
   const { bookingId, action } = route.params;
@@ -207,11 +201,11 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
             <Text style={styles.cardTitle}>STAY DETAILS</Text>
             <View style={styles.row}>
               <Text style={styles.rowLabel}>Check-in</Text>
-              <Text style={styles.rowValue}>{fmt(booking.checkInDate)}</Text>
+              <Text style={styles.rowValue}>{formatDateLong(booking.checkInDate)}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowLabel}>Check-out</Text>
-              <Text style={styles.rowValue}>{fmt(booking.checkOutDate)}</Text>
+              <Text style={styles.rowValue}>{formatDateLong(booking.checkOutDate)}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowLabel}>Duration</Text>
@@ -343,7 +337,7 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
                   onPress={() => setShowPickerIn(true)}
                 >
                   <Text style={newCheckIn ? styles.dateValue2 : styles.datePlaceholder2}>
-                    {newCheckIn ? fmtShort(newCheckIn) : 'Select date'}
+                    {formatDateShort(newCheckIn)}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -354,7 +348,7 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
                   onPress={() => setShowPickerOut(true)}
                 >
                   <Text style={newCheckOut ? styles.dateValue2 : styles.datePlaceholder2}>
-                    {newCheckOut ? fmtShort(newCheckOut) : 'Select date'}
+                    {formatDateShort(newCheckOut)}
                   </Text>
                 </TouchableOpacity>
               </View>

@@ -15,16 +15,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { COLORS } from '../../constants/colors';
 import { RootStackParamList } from '../../types';
-import { formatPrice } from '../../utils/formatUtils';
+import { formatPrice, formatDateYYYYMMDD } from '../../utils/formatUtils';
 import { useAuth } from '../../context/AuthContext';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'BookingStep2'>;
   route: RouteProp<RootStackParamList, 'BookingStep2'>;
 };
-
-const fmtDate = (d: string) =>
-  new Date(d).toISOString().split('T')[0];
 
 export default function BookingStep2Screen({ navigation, route }: Props) {
   const { room, checkIn, checkOut, guests, totalPrice } = route.params;
@@ -111,11 +108,11 @@ export default function BookingStep2Screen({ navigation, route }: Props) {
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Check-in</Text>
-            <Text style={styles.summaryValue}>{fmtDate(checkIn)}</Text>
+            <Text style={styles.summaryValue}>{formatDateYYYYMMDD(checkIn)}</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Check-out</Text>
-            <Text style={styles.summaryValue}>{fmtDate(checkOut)}</Text>
+            <Text style={styles.summaryValue}>{formatDateYYYYMMDD(checkOut)}</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Nights</Text>

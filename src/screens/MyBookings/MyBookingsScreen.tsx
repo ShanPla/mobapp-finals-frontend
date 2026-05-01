@@ -7,7 +7,7 @@ import { useBookings } from '../../context/BookingContext';
 import { useAuth } from '../../context/AuthContext';
 import { COLORS } from '../../constants/colors';
 import { Booking, RootStackParamList } from '../../types';
-import { formatPrice } from '../../utils/formatUtils';
+import { formatPrice, formatDateYYYYMMDD } from '../../utils/formatUtils';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
 import styles from './styles';
@@ -22,9 +22,6 @@ const TAB_EMPTY: Record<Tab, { icon: React.ComponentProps<typeof Ionicons>['name
   Completed: { icon: 'star-outline', title: 'No completed stays', subtitle: 'Finished stays eligible for review appear here.' },
   Cancelled: { icon: 'close-circle-outline', title: 'No cancelled bookings', subtitle: 'Cancelled bookings will appear here.' },
 };
-
-const formatDate = (d: string) =>
-  new Date(d).toISOString().split('T')[0]; // YYYY-MM-DD as seen in Figma
 
 const nightsCount = (checkIn: string, checkOut: string) =>
   Math.round((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24));
@@ -172,7 +169,7 @@ export default function MyBookingsScreen() {
                   <View style={styles.detailsGrid}>
                     <View style={styles.detailItem}>
                       <Text style={styles.detailLabel}>Check-in</Text>
-                      <Text style={styles.detailValue}>{formatDate(item.checkInDate)}</Text>
+                      <Text style={styles.detailValue}>{formatDateYYYYMMDD(item.checkInDate)}</Text>
                     </View>
                     <View style={styles.detailItem}>
                       <Text style={styles.detailLabel}>Nights</Text>
@@ -180,7 +177,7 @@ export default function MyBookingsScreen() {
                     </View>
                     <View style={styles.detailItem}>
                       <Text style={styles.detailLabel}>Check-out</Text>
-                      <Text style={styles.detailValue}>{formatDate(item.checkOutDate)}</Text>
+                      <Text style={styles.detailValue}>{formatDateYYYYMMDD(item.checkOutDate)}</Text>
                     </View>
                   </View>
 
