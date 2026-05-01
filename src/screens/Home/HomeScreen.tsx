@@ -119,7 +119,9 @@ export default function HomeScreen() {
         matchCategory = r.type === 'Suite';
       } else if (selectedCategory === 'Family') {
         matchCategory = r.type === 'Family' || r.maxPeople >= 4;
-      } 
+      } else if (selectedCategory !== 'All') {
+        matchCategory = r.type === selectedCategory;
+      }
 
       const matchPrice = r.pricePerNight >= activePriceRange.min && r.pricePerNight <= activePriceRange.max;
       const matchAvailable = !activeAvailableOnly || r.isAvailable;
@@ -275,9 +277,6 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Featured Rooms</Text>
-              <TouchableOpacity>
-                <Text style={styles.seeAll}>See all</Text>
-              </TouchableOpacity>
             </View>
             <ScrollView 
               horizontal 
