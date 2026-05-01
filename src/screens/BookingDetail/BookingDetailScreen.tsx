@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
@@ -52,6 +52,7 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
   const [reviewText, setReviewText] = useState('');
   const [ratingErr, setRatingErr] = useState('');
   const [textErr, setTextErr] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const booking = bookings.find(b => b.id === bookingId);
 
@@ -86,10 +87,17 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
   const existingReview = reviews.find(r => r.bookingId === bookingId);
 
   const handleCancel = async () => {
-    await cancelBooking(bookingId);
-    setCancelModal(false);
-    showToast('Booking cancelled. Refund processed minus cancellation fee.', 'info');
-    navigation.goBack();
+    setIsSaving(true);
+    try {
+      await cancelBooking(bookingId);
+      setCancelModal(false);
+      showToast('Booking cancelled. Refund processed minus cancellation fee.', 'info');
+      navigation.goBack();
+    } catch (err: any) {
+      showToast(err.message || 'Failed to cancel booking', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // ── Edit Booking ─────────────────────────────────────────────────────────────
@@ -115,14 +123,22 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
     const inStr = newCheckIn.toISOString();
     const outStr = newCheckOut.toISOString();
     
-    if (await isRoomBooked(booking.room.id, inStr, outStr, bookingId)) {
-      showToast('These dates are no longer available. Please choose others.', 'error');
-      return;
-    }
+    setIsSaving(true);
+    try {
+      if (await isRoomBooked(booking.room.id, inStr, outStr, bookingId)) {
+        showToast('These dates are no longer available. Please choose others.', 'error');
+        setIsSaving(false);
+        return;
+      }
 
-    await editBooking(bookingId, inStr, outStr, newGuests, newTotalPrice);
-    setEditModal(false);
-    showToast('Booking updated successfully!', 'success');
+      await editBooking(bookingId, inStr, outStr, newGuests, newTotalPrice);
+      setEditModal(false);
+      showToast('Booking updated successfully!', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to update booking', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // ── Review ───────────────────────────────────────────────────────────────────
@@ -133,18 +149,25 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
     setTextErr(tErr ?? '');
     if (rErr || tErr) { showToast('Please complete all review fields.', 'error'); return; }
 
-    await addReview({
-      bookingId,
-      userId: user!.id,
-      roomId: booking.room.id,
-      rating,
-      text: reviewText.trim(),
-      userName: `${user!.firstName} ${user!.lastName}`,
-    });
-    setReviewModal(false);
-    setRating(0);
-    setReviewText('');
-    showToast(VALIDATION.REVIEW_SUBMITTED, 'success');
+    setIsSaving(true);
+    try {
+      await addReview({
+        bookingId,
+        userId: user!.id,
+        roomId: booking.room.id,
+        rating,
+        text: reviewText.trim(),
+        userName: `${user!.firstName} ${user!.lastName}`,
+      });
+      setReviewModal(false);
+      setRating(0);
+      setReviewText('');
+      showToast(VALIDATION.REVIEW_SUBMITTED, 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to submit review', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // ── Status badge map ─────────────────────────────────────────────────────────
@@ -379,8 +402,16 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.modalSaveBtn} onPress={handleEditBooking}>
-              <Text style={styles.modalSaveBtnText}>Confirm Changes</Text>
+            <TouchableOpacity 
+              style={[styles.modalSaveBtn, isSaving && { opacity: 0.7 }]} 
+              onPress={handleEditBooking}
+              disabled={isSaving}
+            >
+              {isSaving ? (
+                <ActivityIndicator color={COLORS.white} />
+              ) : (
+                <Text style={styles.modalSaveBtnText}>Confirm Changes</Text>
+              )}
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.modalCancelBtn}
@@ -512,8 +543,16 @@ export default function BookingDetailScreen({ navigation, route }: Props) {
               />
               {!!textErr && <Text style={styles.modalError}>{textErr}</Text>}
 
-              <TouchableOpacity style={styles.modalSaveBtn} onPress={handleSubmitReview}>
-                <Text style={styles.modalSaveBtnText}>Submit Review</Text>
+              <TouchableOpacity 
+                style={[styles.modalSaveBtn, isSaving && { opacity: 0.7 }]} 
+                onPress={handleSubmitReview}
+                disabled={isSaving}
+              >
+                {isSaving ? (
+                  <ActivityIndicator color={COLORS.white} />
+                ) : (
+                  <Text style={styles.modalSaveBtnText}>Submit Review</Text>
+                )}
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modalCancelBtn}
